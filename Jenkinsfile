@@ -48,6 +48,9 @@ pipeline {
             sh "git config --global credential.helper store"
 
             sh "jx step git credentials"
+              
+            sh 'echo $DOCKER_REGISTRY'
+              
             // so we can retrieve the version in later steps
             sh "echo \$(jx-release-version) > VERSION"
           }
@@ -59,8 +62,6 @@ pipeline {
           container('nodejs') {
             sh "npm install"
             sh "CI=true DISPLAY=:99 npm test"
-              
-            sh 'echo $DOCKER_REGISTRY'
               
             sh 'export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml'
 
