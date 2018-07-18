@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: draft
-  tag: dev
+  repository: 759871273906.dkr.ecr.us-west-2.amazonaws.com/nalbam/node-http
+  tag: 0.0.1
   pullPolicy: IfNotPresent
 service:
   name: node-http
