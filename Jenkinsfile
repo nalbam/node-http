@@ -24,7 +24,8 @@ pipeline {
 
             sh 'export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml'
 
-
+            sh 'echo $DOCKER_REGISTRY'
+            
             sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           }
 
