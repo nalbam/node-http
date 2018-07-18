@@ -22,10 +22,10 @@ pipeline {
             sh "npm install"
             sh "CI=true DISPLAY=:99 npm test"
 
-            sh 'export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml'
-
             sh 'echo $DOCKER_REGISTRY'
             
+            sh 'export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml'
+
             sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           }
 
@@ -46,10 +46,8 @@ pipeline {
             // ensure we're not on a detached head
             sh "git checkout master"
             sh "git config --global credential.helper store"
-
-            sh "jx step git credentials"
               
-            sh 'echo $DOCKER_REGISTRY'
+            sh "jx step git credentials"
               
             // so we can retrieve the version in later steps
             sh "echo \$(jx-release-version) > VERSION"
@@ -62,6 +60,8 @@ pipeline {
           container('nodejs') {
             sh "npm install"
             sh "CI=true DISPLAY=:99 npm test"
+              
+            sh 'echo $DOCKER_REGISTRY'
               
             sh 'export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml'
 
